@@ -28,47 +28,53 @@ export default function Comics({comics}: ComicsDisplayProps) {
         <div className={styles.main}>
             <div style={{display: "flex", justifyContent: "center"}}>
                 <img
-                    src="/logo/stub.jpeg"
+                    src="/logo/stub-halloween.jpg"
                     alt="Stub logo"
                     style={{maxWidth: 320, width: "100%"}}
                 />
             </div>
 
-            {/* Pagination */}
-            <div className={styles.pagination}>
-                <div>
-                    {currentPage > 1 && (
-                        <Link href={`/?page=1`}>
-                            <button className={styles.button} style={{marginRight: "8px"}}>First</button>
-                        </Link>
-                    )}
-                    {currentPage > 1 && (
-                        <Link href={`/?page=${currentPage - 1}`}>
-                            <button className={styles.button}>Previous
-                            </button>
-                        </Link>
-                    )}
-                </div>
-                <div>
-                    {index > 0 && (
-                        <Link href={`/?page=${currentPage + 1}`}>
-                            <button className={styles.button} style={{marginRight: "8px"}}>Next</button>
-                        </Link>
-                    )}
-                    {index > 0 && (
-                        <Link href={`/?page=${comics.length}`}>
-                            <button className={styles.button}>Latest</button>
-                        </Link>
-                    )}
-                </div>
-            </div>
+            <Pagination currentPage={currentPage} totalComics={totalComics}/>
 
-            {/* Display the comic for the current page */}
             <img
                 src={comic.media_attachments[0].url}
                 alt="Comic"
                 style={{maxWidth: 600, width: "100%"}}
             />
+
+            <Pagination currentPage={currentPage} totalComics={totalComics}/>
+        </div>
+    );
+}
+
+const Pagination = ({currentPage, totalComics}: { currentPage: number, totalComics: number }) => {
+    return (
+        <div className={styles.pagination}>
+            <div>
+                {currentPage > 1 && (
+                    <Link href={`/?page=1`}>
+                        <button className={styles.button} style={{marginRight: "8px"}}>First</button>
+                    </Link>
+                )}
+                {currentPage > 1 && (
+                    <Link href={`/?page=${currentPage - 1}`}>
+                        <button className={styles.button}>Previous
+                        </button>
+                    </Link>
+                )}
+            </div>
+            <div>
+                {currentPage < totalComics && (
+                    <Link href={`/?page=${currentPage + 1}`}>
+                        <button className={styles.button} style={{marginRight: "8px"}}>Next</button>
+                    </Link>
+                )}
+                {currentPage < totalComics && (
+                    <Link href={`/?page=${totalComics}`}>
+                        <button className={styles.button}>Latest</button>
+                    </Link>
+                )}
+            </div>
         </div>
     );
 }
