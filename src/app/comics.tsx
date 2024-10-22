@@ -1,7 +1,7 @@
 'use client'; // Mark this component as a client component
 
-import { useSearchParams } from 'next/navigation';
-import { MastodonStatus } from '@/app/mastodon';
+import {useSearchParams} from 'next/navigation';
+import {MastodonStatus} from '@/app/mastodon';
 import Link from 'next/link';
 import styles from "./page.module.css";
 
@@ -9,7 +9,7 @@ interface ComicsDisplayProps {
     comics: MastodonStatus[];
 }
 
-export default function Comics({ comics }: ComicsDisplayProps) {
+export default function Comics({comics}: ComicsDisplayProps) {
     const searchParams = useSearchParams();
     const currentPage = Number(searchParams.get('page')) || comics.length;
 
@@ -26,56 +26,49 @@ export default function Comics({ comics }: ComicsDisplayProps) {
 
     return (
         <div className={styles.main}>
-            <img
-                src="/logo/stub.jpeg"
-                alt="Stub logo"
-                style={{ maxWidth: 600, width: "100%" }}
-            />
+            <div style={{display: "flex", justifyContent: "center"}}>
+                <img
+                    src="/logo/stub.jpeg"
+                    alt="Stub logo"
+                    style={{maxWidth: 320, width: "100%"}}
+                />
+            </div>
 
             {/* Pagination */}
             <div className={styles.pagination}>
-                {currentPage > 1 && (
-                    <Link href={`/?page=${currentPage - 1}`}>
-                        <button>Previous</button>
-                    </Link>
-                )}
-                {index > 0 && (
-                    <Link href={`/?page=${currentPage + 1}`}>
-                        <button>Next</button>
-                    </Link>
-                )}
-                {currentPage > 1 && (
-                    <Link href={`/?page=1`}>
-                        <button>First</button>
-                    </Link>
-                )}
+                <div>
+                    {currentPage > 1 && (
+                        <Link href={`/?page=1`}>
+                            <button className={styles.button} style={{marginRight: "8px"}}>First</button>
+                        </Link>
+                    )}
+                    {currentPage > 1 && (
+                        <Link href={`/?page=${currentPage - 1}`}>
+                            <button className={styles.button}>Previous
+                            </button>
+                        </Link>
+                    )}
+                </div>
+                <div>
+                    {index > 0 && (
+                        <Link href={`/?page=${currentPage + 1}`}>
+                            <button className={styles.button} style={{marginRight: "8px"}}>Next</button>
+                        </Link>
+                    )}
+                    {index > 0 && (
+                        <Link href={`/?page=${comics.length}`}>
+                            <button className={styles.button}>Latest</button>
+                        </Link>
+                    )}
+                </div>
             </div>
 
             {/* Display the comic for the current page */}
             <img
                 src={comic.media_attachments[0].url}
                 alt="Comic"
-                style={{ maxWidth: 600, width: "100%" }}
+                style={{maxWidth: 600, width: "100%"}}
             />
-
-            {/* Pagination */}
-            <div className={styles.pagination}>
-                {currentPage > 1 && (
-                    <Link href={`/?page=${currentPage - 1}`}>
-                        <button>Previous</button>
-                    </Link>
-                )}
-                {index > 0 && (
-                    <Link href={`/?page=${currentPage + 1}`}>
-                        <button>Next</button>
-                    </Link>
-                )}
-                {currentPage > 1 && (
-                    <Link href={`/?page=1`}>
-                        <button>First</button>
-                    </Link>
-                )}
-            </div>
         </div>
     );
 }
