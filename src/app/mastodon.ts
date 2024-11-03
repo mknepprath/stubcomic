@@ -33,7 +33,7 @@ export async function fetchMastodonComics(): Promise<MastodonStatus[]> {
                 Authorization: `Bearer ${ACCESS_TOKEN}`,
             },
             params: {
-                limit: 10,
+                limit: 100,
             },
         });
 
